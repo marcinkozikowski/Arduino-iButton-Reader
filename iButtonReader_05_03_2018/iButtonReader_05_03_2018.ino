@@ -30,25 +30,24 @@ void loop(void) {
       String b ="";
       b=String(tmp);
       b.toUpperCase();
-      Serial.println("\nTmp: "+b);
-      Serial.println("iButtonTag "+iButtonTag);
-      Serial.println(b);
       if(checkButton(b))
       {
-        Serial.print("Pelna zgodnosc, pastylka w czytniku");
+        // Show green diod on reader 
         digitalWrite(8,HIGH);
         digitalWrite(10,HIGH);
         digitalWrite(9,LOW);
+        //pass high state to output L293D
         sendHighState();
       }
   }
   else if(!getKeyCode())
       {
+        //show red diod on reader
         digitalWrite(8,LOW);
         digitalWrite(9,HIGH);
         digitalWrite(10,LOW);
+        //Pass low state to output 293D
         sendLowState();
-        Serial.println("\nFalse ");
       }
   delay(1000);
 }
@@ -69,7 +68,8 @@ void sendLowState(){
   digitalWrite(2,LOW);
   digitalWrite(3,LOW);
 }
-  
+
+//chec CRC code
 bool getKeyCode(){
   byte present = 0;
   byte data[12];
